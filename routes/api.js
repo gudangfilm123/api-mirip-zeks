@@ -33,6 +33,7 @@ var fetch = require('node-fetch');
 var cheerio = require('cheerio');
 var request = require('request');
 var fs = require('fs');
+const { parse } = require('rss-to-json');
 var router  = express.Router();
 var creator = 'ZeeoneOfc' // ubah jadi nama lu
 const listkey = ["Alphabot","Zeeone","ZeeoneOfc"]; // ubah apikey nya, tambah aja klo mau
@@ -261,6 +262,19 @@ router.get('/cecan/korea', async (req, res, next) => {
   res.json(loghandler.apikey)
 }
 })
+
+router.get('/muse', async (req, res, next) => {
+          var apikey = req.query.apikey
+       	if(!apikey) return res.json(loghandler.apikey)
+        if(listkey.includes(apikey)){
+       parse('https://www.youtube.com/feeds/videos.xml?channel_id=UCxxnxya_32jcKj4yN1_kD7A').then(rss => {
+    console.log(JSON.stringify(rss, null, 3));
+})
+} else {
+  res.json(loghandler.apikey)
+}
+})
+
 router.get('/cecan/japan', async (req, res, next) => {
           var apikey = req.query.apikey
        	if(!apikey) return res.json(loghandler.apikey)
